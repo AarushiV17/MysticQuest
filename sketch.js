@@ -15,6 +15,7 @@ var GAMEWIN = 5;
 var GAMEWIN2 = 6;
 var GAMEOVER2 = 9;
 var LEVELUP = 10;
+var STORY = 11;
 var gameState = START;
 var player,playerImg,playerImg2;
 var unicorn, Stand , Run;
@@ -55,6 +56,7 @@ var bg6 , bg6Img ;
 var dragon , dragonImg;
 var waterarrow,waterarrowImg,waterbow,waterbowImg,firearrow,firearrowImg,firebow,firebowImg,bagfull,bagempty,bagfullImg,bagemptyImg,bow1,bowImg3,rightfireImg;
 var waterarrowcount=5,firearrowcount=5,health=100,dragonhealth=100;
+var howtoplay , howtoplayImg , infoScreen, storyImg;
 var music;
 
 function preload(){
@@ -112,6 +114,8 @@ function preload(){
  gameover3Img = loadImage('gameover3.png')
  bowImg3 = loadImage('bow1.png');
  rightfireImg = loadImage('rightfire.png');
+ howtoplayImg = loadImage('howtoplay.png');
+ storyImg = loadImage('story.png')
  music = loadSound('music.mp3');
 }
 
@@ -333,6 +337,15 @@ gameover3.visible = false;
   invisGround2 = createSprite(10,740,5000,20);
   invisGround2.visible = false;
 
+  howtoplay = createSprite(1000,600)
+  howtoplay.addImage(howtoplayImg);
+  howtoplay.scale = 0.3;
+  howtoplay.visible = false;
+
+  infoScreen = createSprite(width/2,height/2);
+  infoScreen.addImage(storyImg);
+  infoScreen.scale = 0.5;
+
  enemyGroup = new Group();
  obstaclesGroup = new Group();
  fireballobGroup = new Group ();
@@ -340,13 +353,14 @@ gameover3.visible = false;
 
 function draw() {
   
-  //music.play();
+  music.play();
 
   if(gameState === START){
     background(bgImg);
     logo.visible = true;
     gbutton.visible = true;
     player.visible = false;
+    howtoplay.visible = true;
 
     diamond1.visible = false;
     diamond2.visible = false;
@@ -382,17 +396,27 @@ function draw() {
 
     gameover2.visible = false;
     levelup.visible = false;
+    infoScreen.visible = false;
 
     if(mousePressedOver(gbutton)){
        gameState = LEVEL1;
     }
+    
+    if(mousePressedOver(howtoplay)){
+      infoScreen.visible = true;
+    }
   }
-  else if(gameState === LEVEL1){
+  
+ 
+
+
+  if(gameState === LEVEL1){
 
     background(bg2Img); 
     logo.visible = false;
     gbutton.visible = false;
     player.visible = true;
+    howtoplay.visible = false;
 
     diamond1.visible = true;
     diamond2.visible =true;
@@ -419,6 +443,7 @@ function draw() {
 
     unicorn.visible = false;
     bow.visible = false;
+ 
     
     if(diamond1.isTouching(player)){
       diamond1.velocityX = 6;
@@ -923,6 +948,11 @@ if(mousePressedOver(gamewin2))
   text(dragonhealth,dragon.x-150,dragon.y+50);
   }
     }
+
+function Story(){
+  infoScreen.visible = false;
+  gameState = START;
+}
 
  
 function restart2(){
