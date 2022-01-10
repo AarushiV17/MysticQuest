@@ -352,8 +352,6 @@ gameover3.visible = false;
 }
 
 function draw() {
-  
-  music.play();
 
   if(gameState === START){
     background(bgImg);
@@ -400,6 +398,7 @@ function draw() {
 
     if(mousePressedOver(gbutton)){
        gameState = LEVEL1;
+       music.play();
     }
     
     if(mousePressedOver(howtoplay)){
